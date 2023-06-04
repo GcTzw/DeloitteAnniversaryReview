@@ -1,17 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/all.css">
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <h1>123</h1>
+
+    <div id="app">
+        <h1 class="text-center bgc-more-light py-5 ">{{ Title }}</h1>
+
+        <div class="container mt-5">
+            <!-- 使用V-for用Div去顯示所有Arr底下資訊，Arr.title使用H2，Arr.List用ul.list-unstyled顯示所有資料，li裡面使用h3遍例顯示Arr.list.item的資料-->
+            <div v-for="item in Arr" class="mb-5">
+                <h2 class="h2-title text-more-dark">{{item.title}}</h2>
+                <ul class="item-list">
+                    <li v-for="contain in item.list">
+                        <div class="card p-3">
+                            <h3>{{contain}}</h3>
+                            <p>123</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        init();
+
+        function init() {
+            let str = getData();
+            console.log(str);
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        Title: '報告',
+                        Arr: str
+                    }
+                },
+                methods: {
+                    //click .btnTest pop out swal show message 123
+                    btnTest() {
+                        Swal.fire({
+                            title: '123',
+                            text: '456',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        })
+                    }
+                }
+            })
+            app.mount('#app')
+        }
+
+        function getData() {
+            let rtnArr = [];
+
+            for (let i = 0; i < 3; i++)
+                rtnArr.push(getMainEntity(i));
+
+            return rtnArr;
+        }
+
+        function getMainEntity(index) {
+            let rtnObj = {};
+
+            switch (index) {
+                case 0:
+                    rtnObj.title = "年度業務";
+                    rtnObj.list = getSubEntity(index);
+                    break;
+                case 1:
+                    rtnObj.title = "技能提升";
+                    rtnObj.list = getSubEntity(index);
+                    break;
+                case 2:
+                    rtnObj.title = "展望24";
+                    rtnObj.list = getSubEntity(index);
+                    break;
+                default:
+                    break;
+
+            }
+
+            return rtnObj;
+        }
+
+        function getSubEntity(index) {
+            let Arr = [];
+
+            switch (index) {
+                case 0:
+                    Arr.push("Web RK");
+                    Arr.push("KPI");
+                    Arr.push("Dayshape");
+                    break;
+                case 1:
+                    Arr.push("compTIA security+");
+                    Arr.push("Docker");
+                    Arr.push("網頁排版與JS");
+                    break;
+                case 2:
+                    Arr.push("Azure Contianer");
+                    Arr.push(".Net Core");
+                    Arr.push("Copilot");
+                    break;
+                default:
+                    break;
+
+            }
+            return Arr;
+        }
+    </script>
 </body>
+
 </html>
